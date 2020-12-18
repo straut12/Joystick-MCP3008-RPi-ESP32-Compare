@@ -49,6 +49,7 @@ To get the ESP32 time required to collect the analog data utime.ticks_diff() was
 ## Final Comparison
 
 Pandas and Seaborn were used to create boxplots comparing the data (note a different set of data was collected with more samples for the final comparison)
+See the jupyter notebook ADC-comparison.ipynb for Pandas/Seaborn instuctions.
 
 ![boxplot](images/boxplot.png "Boxplot of analog read time")
 
