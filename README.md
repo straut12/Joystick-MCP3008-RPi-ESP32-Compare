@@ -19,6 +19,8 @@ To install Adafruit packages for MCP3008
 For the Raspberry Pi0 and Pi3A+, cProfile was used to track down what portion of code was taking the longest. cProfile should be in standard Python library and no need to be installed. Execute the program with cProfile (syntax below) and move the joystick allowing the profiler to collect data on how long each function is taking.​  
 `$ python3 -m cProfile -o outputfilename.cprof script-name.py`
 
+* See adcRPi-MCP3008.py for code 
+
 Once you have a time profile file created there are a couple options I used to view the results.
 1. pstats (output in python REPL)
 2. snakeviz (visual in web browser)
@@ -48,6 +50,8 @@ Again you can see the analog_in.py taking up most of the program time for the RP
 ## Using utime.ticks_diff(time1, time2) to analyze upython code on ESP32
 
 To get the ESP32 time required to collect the analog data utime.ticks_diff() was used.  The setup is fairly simple.  You put time0 (starting time) before the section to analyze and then use the utime.ticks_diff(currenttime, time0) to calculate the delta.  (time to read can be recorded to a txt file or sent to a server via MQTT and saved in a database.   Example below includes output to a txt file. The time is output in us so divide by 1000 to get ms.​​
+
+* See upython-ESP32/main.py code
 
 ## Final Comparison
 
