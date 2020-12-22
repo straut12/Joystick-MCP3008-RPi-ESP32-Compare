@@ -30,7 +30,7 @@ chan = [AnalogIn(mcp, MCP.P0),        #  create analog input channel on pins, bu
         AnalogIn(mcp, MCP.P5),
         AnalogIn(mcp, MCP.P6),
         AnalogIn(mcp, MCP.P7)]
-sensorAve = [x for x in range(numOfChannels)]
+sensorAve = [x for x in range(numOfChannels)]  # initialize sensorAve list
 sensorLastRead = [x for x in range(numOfChannels)]  #  store the last reading for noise filter  #
 for x in range(numOfChannels):              #  initialize the first read for comparison later  #
   sensorLastRead[x] = chan[x].value
