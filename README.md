@@ -19,7 +19,7 @@ To install Adafruit packages for MCP3008
 
 ## Using cProfile to analyze python code
 For the Raspberry Pi0 and Pi3A+, cProfile was used to track down what portion of code was taking the longest. cProfile should be in standard Python library and no need to be installed. Execute the program with cProfile (syntax below) and move the joystick allowing the profiler to collect data on how long each function is taking.​  
-`(.venv)$ python3 -m cProfile -o outputfilename.cprof script-name.py`
+`(.venv)$ python3 -m cProfile -o outputfilename.cprof script-name.py`  
 for example  
 `(.venv)$ python3 -m cProfile -o profile-data.cprof buggy.py`  
 
