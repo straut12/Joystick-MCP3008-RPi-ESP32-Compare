@@ -1,10 +1,12 @@
 # Compare Performance of Analog Joystick with Raspberry Pi 3A+/0 (+MCP3008) vs ESP32
 
-For the controller portion of a motorized buggy I was using an analog joystick. First attempt was with a Raspberry Pi 0 and ADC (MCP3008). While the Pi0/MCP3008 did work the response was too laggy to be useable. I then tried a Pi3A+ (quad core) and it worked much better with the joystick. Next I used a ESP32 and got the best performance. It is easy to research how a microcontroller (ESP32) would be faster than a Raspberry Pi/ADC (MCP3008) combo in an analog use case. But I wanted to be able to quantify the difference I was seeing between hardware. Boxplots are a great way to visualize how significant the delta is so the exercise also gave me an opportunity to use Jupyter Notebook and learn how to create boxplots with Panda/Seaborn.​ First, to create the dataset, I would need to isolate the bottle neck in the program.  cProfile would be used for the Raspberry Pi Python programs and utime.ticks_diff() would be used to investigate the ESP32 micropython code.​​​
+I was trying to use a Raspberry Pi0 (with MCP3008 ADC) to control a joystick for a motorized buggy. However, it was too laggy to be useable. After more testing I saw Raspberry Pi 3A+ (quad core) was better and ESP32 was best. By using cProfile on the Raspberry Pis and utime.ticks_diff() on ESP32 I could compare the amount of time each hardware took to get the analog input from the joystick and quantify what I was seeing with the buggy. It is easy to research how a microcontroller (ESP32) would be faster than a Raspberry Pi/ADC combo in an analog use case. But I wanted to be able to quantify the difference I was seeing between hardware. Boxplots are a great way to visualize how significant the delta is so the project gave me an opportunity to use Jupyter Notebook and learn how to create boxplots with Panda/Seaborn.  
+
+First, to create the dataset, I would need to isolate the bottle neck in the program.  cProfile would be used for the Raspberry Pi Python programs and utime.ticks_diff() would be used to investigate the ESP32 micropython code.​​​
 
 ## Connections and Hardware
 To install Adafruit packages for MCP3008   
-`$ pip3 install adafruit-circuitpython-mcp3xxx`
+`(.venv)$ python3 -m pip install adafruit-circuitpython-mcp3xxx`
 
 
 ![RPi and ESP32](images/RPi-and-ESP32-and-Joystick.png "RPi and ESP32 with Joystick")
@@ -17,17 +19,19 @@ To install Adafruit packages for MCP3008
 
 ## Using cProfile to analyze python code
 For the Raspberry Pi0 and Pi3A+, cProfile was used to track down what portion of code was taking the longest. cProfile should be in standard Python library and no need to be installed. Execute the program with cProfile (syntax below) and move the joystick allowing the profiler to collect data on how long each function is taking.​  
-`$ python3 -m cProfile -o outputfilename.cprof script-name.py`
+`(.venv)$ python3 -m cProfile -o outputfilename.cprof script-name.py`
+for example  
+`(.venv)$ python3 -m cProfile -o profile-data.cprof buggy.py`  
 
 * See adcRPi-MCP3008.py for code 
 
-Once you have a time profile file created there are a couple options I used to view the results.
+Once you have a time profile file created there are a couple options to view the results.
 1. pstats (output in python REPL)
 2. snakeviz (visual in web browser)
 
 ## pstats
 A quick table output can be seen with pstats.  
-`$ sudo pip3 install pstats-view`
+`(.venv)$ python3 -m pip install pstats-view`
 
 Then go into Python REPL   
 `>>> import pstats`  
@@ -39,9 +43,9 @@ Then go into Python REPL
 ## SnakeViz
 Visual chart of the data viewable in a web browser.  
 
-`$ sudo pip3 install snakeviz `  
-`$ snakeviz outputfilename.cprof `  
-`$ snakeviz --help`
+`(.venv)$ python3 -m pip3 install snakeviz `  
+`(.venv)$ snakeviz outputfilename.cprof `  
+`(.venv)$ snakeviz --help`
 
 ![SnakeViz](images/snakeviz-plot.png "SnakeViz output")
 
