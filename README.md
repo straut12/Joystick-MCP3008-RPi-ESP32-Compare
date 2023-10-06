@@ -1,5 +1,7 @@
 # Compare Performance of Analog Joystick with Raspberry Pi 3A+/0 (+MCP3008) vs ESP32
 
+[Link to General Workflow with MQTT, NodeRed, Hardware, Coding Setup](https://stemjust4u.github.io/ref/data-analysis/workflow/)
+
 I was trying to use a Raspberry Pi0 (with MCP3008 ADC) to control a joystick for a motorized buggy. However, it was too laggy to be useable. After more testing I saw Raspberry Pi 3A+ (quad core) was better and ESP32 was best. By using cProfile on the Raspberry Pis and utime.ticks_diff() on ESP32 I could compare the amount of time each hardware took to get the analog input from the joystick and quantify what I was seeing with the buggy. It is easy to research how a microcontroller (ESP32) would be faster than a Raspberry Pi/ADC combo in an analog use case. But I wanted to be able to quantify the difference I was seeing between hardware. Boxplots are a great way to visualize how significant the delta is so the project gave me an opportunity to use Jupyter Notebook and learn how to create boxplots with Panda/Seaborn.  
 
 First, to create the dataset, I would need to isolate the bottle neck in the program.  cProfile would be used for the Raspberry Pi Python programs and utime.ticks_diff() would be used to investigate the ESP32 micropython code.​​​
